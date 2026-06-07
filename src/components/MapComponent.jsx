@@ -57,11 +57,20 @@ export default function MapComponent({
   }, [selectedLocation]);
 
   const initialView = { longitude: -79.4, latitude: 43.93, zoom: 9 };
+  const token = import.meta.env.VITE_MAPBOX_TOKEN;
+
+  if (!token) {
+    return (
+      <div className="flex items-center justify-center h-full bg-gray-100">
+        <p className="text-sm text-gray-500">Map unavailable — VITE_MAPBOX_TOKEN is not set.</p>
+      </div>
+    );
+  }
 
   return (
     <Map
       ref={mapRef}
-      mapboxAccessToken={import.meta.env.VITE_MAPBOX_TOKEN}
+      mapboxAccessToken={token}
       initialViewState={initialView}
       style={{ width: '100%', height: '100%' }}
       mapStyle="mapbox://styles/mapbox/light-v11"

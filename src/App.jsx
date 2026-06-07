@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, Component } from 'react'
 import MapComponent from './components/MapComponent'
 import ChatPanel from './components/ChatPanel'
 import { Button } from '@/components/ui/button'
@@ -36,6 +36,22 @@ function decodeToken(token) {
     return payload
   } catch {
     return null
+  }
+}
+
+// ── Error boundary ───────────────────────────────────────────────────────────
+
+class ErrorBoundary extends Component {
+  constructor(props) {
+    super(props)
+    this.state = { hasError: false }
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true }
+  }
+  render() {
+    if (this.state.hasError) return this.props.fallback ?? null
+    return this.props.children
   }
 }
 
@@ -758,15 +774,21 @@ function App() {
 
         {/* Map */}
         <main className="flex-1 relative overflow-hidden">
-          <MapComponent
-            locations={locations}
-            selectedLocation={selected}
-            onSelectLocation={setSelected}
-            onLocationChange={setUserLocation}
-            otherUsers={otherUsers}
-            carpoolRequests={carpoolRequests}
-            userId={userId}
-          />
+          <ErrorBoundary fallback={
+            <div className="flex items-center justify-center h-full bg-gray-100">
+              <p className="text-sm text-gray-500">Map unavailable — check your Mapbox token.</p>
+            </div>
+          }>
+            <MapComponent
+              locations={locations}
+              selectedLocation={selected}
+              onSelectLocation={setSelected}
+              onLocationChange={setUserLocation}
+              otherUsers={otherUsers}
+              carpoolRequests={carpoolRequests}
+              userId={userId}
+            />
+          </ErrorBoundary>
         </main>
 
         {/* Chat panel (slides in from right) */}
