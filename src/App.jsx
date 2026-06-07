@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef, Component } from 'react'
-import MapComponent from './components/MapComponent'
+import { useState, useEffect, useRef, Component, lazy, Suspense } from 'react'
+const MapComponent = lazy(() => import('./components/MapComponent'))
 import ChatPanel from './components/ChatPanel'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -779,6 +779,7 @@ function App() {
               <p className="text-sm text-gray-500">Map unavailable — check your Mapbox token.</p>
             </div>
           }>
+            <Suspense fallback={<div className="flex-1 bg-gray-100" />}>
             <MapComponent
               locations={locations}
               selectedLocation={selected}
@@ -788,6 +789,7 @@ function App() {
               carpoolRequests={carpoolRequests}
               userId={userId}
             />
+            </Suspense>
           </ErrorBoundary>
         </main>
 
