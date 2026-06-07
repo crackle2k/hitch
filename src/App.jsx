@@ -11,7 +11,7 @@ import { Separator } from '@/components/ui/separator'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import {
-  Globe, MapPin, Users, MessageSquare, UserPlus, Check, X,
+  MapPin, Users, MessageSquare, UserPlus, Check, X,
   LogOut, Search, Car, Plus, Trash2, UserCheck
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -93,18 +93,15 @@ function AuthScreen({ onAuth }) {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
       <div className="relative w-full max-w-sm">
         {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-black shadow-md mb-4">
-            <Globe className="w-7 h-7 text-white" />
-          </div>
-          <h1 className="text-3xl font-extrabold text-black">Hitch</h1>
-          <p className="text-sm text-gray-400 mt-1">York Region District School Board</p>
+        <div className="text-center mb-10">
+          <h1 className="text-4xl font-extrabold text-black tracking-tight">Hitch</h1>
+          <p className="text-sm text-gray-400 mt-2">York Region District School Board</p>
         </div>
 
         {/* Card */}
-        <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-md">
+        <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-md">
           {/* Tabs */}
-          <div className="flex rounded-lg bg-gray-100 p-1 mb-5">
+          <div className="flex rounded-lg bg-gray-100 p-1 mb-6">
             {['login', 'signup'].map(m => (
               <button
                 key={m}
@@ -121,7 +118,7 @@ function AuthScreen({ onAuth }) {
             ))}
           </div>
 
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-4">
             {mode === 'signup' && (
               <Input
                 placeholder="Your name"
@@ -172,7 +169,7 @@ const TABS = [
 function SchoolsTab({ locations, selected, onSelect }) {
   return (
     <div className="flex flex-col flex-1 overflow-hidden">
-      <div className="px-4 py-3 border-b border-gray-200 flex-shrink-0">
+      <div className="px-5 py-4 border-b border-gray-200 flex-shrink-0">
         <p className="text-xs font-bold uppercase tracking-widest text-gray-400">
           Schools &mdash; {locations.length}
         </p>
@@ -183,7 +180,7 @@ function SchoolsTab({ locations, selected, onSelect }) {
             <li
               key={loc.id}
               className={cn(
-                'flex items-center gap-3 px-4 py-2.5 cursor-pointer border-l-2 transition-all duration-100',
+                'flex items-center gap-3 px-5 py-3.5 cursor-pointer border-l-2 transition-all duration-100',
                 selected?.id === loc.id
                   ? 'border-black bg-gray-100'
                   : 'border-transparent hover:bg-gray-50 hover:border-gray-300'
@@ -251,7 +248,7 @@ function CarpoolsTab({ locations, userLocation, userId, carpoolRequests, myReque
 
   return (
     <ScrollArea className="flex-1">
-      <div className="p-3 flex flex-col gap-3">
+      <div className="p-4 flex flex-col gap-4">
         {/* CTA / form */}
         {!myRequest && !showForm && (
           <Button
@@ -307,7 +304,7 @@ function CarpoolsTab({ locations, userLocation, userId, carpoolRequests, myReque
         {/* My request */}
         {myRequest && (
           <Card className="border-[#00B14F]/30 bg-green-50">
-            <CardContent className="pt-3 pb-3">
+            <CardContent className="pt-4 pb-4">
               <div className="flex items-center justify-between mb-1">
                 <Badge variant="teal" className="text-[10px]">Your request</Badge>
                 <Button variant="destructive" size="icon-sm" onClick={cancel}>
@@ -330,7 +327,7 @@ function CarpoolsTab({ locations, userLocation, userId, carpoolRequests, myReque
         ) : (
           otherCarpools.map(req => (
             <Card key={req.id} className="hover:border-gray-400 transition-colors">
-              <CardContent className="pt-3 pb-3">
+              <CardContent className="pt-4 pb-4">
                 <div className="flex items-center gap-3">
                   <Avatar className="h-9 w-9 flex-shrink-0">
                     <AvatarFallback>{req.name[0].toUpperCase()}</AvatarFallback>
@@ -427,7 +424,7 @@ function FriendsTab({ myId, authHeaders, onOpenChat, activeChatId }) {
 
   return (
     <ScrollArea className="flex-1">
-      <div className="p-3 flex flex-col gap-4">
+      <div className="p-4 flex flex-col gap-5">
         {/* Search */}
         <div className="relative">
           <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" />
@@ -441,7 +438,7 @@ function FriendsTab({ myId, authHeaders, onOpenChat, activeChatId }) {
 
         {/* Search results */}
         {searchQ.length >= 2 && (
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-3">
             <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400">Results</p>
             {searching ? (
               <p className="text-xs text-gray-400 text-center py-2">Searching…</p>
@@ -450,7 +447,7 @@ function FriendsTab({ myId, authHeaders, onOpenChat, activeChatId }) {
             ) : (
               searchResults.map(u => (
                 <Card key={u.user_id}>
-                  <CardContent className="pt-3 pb-3 flex items-center gap-3">
+                  <CardContent className="pt-4 pb-4 flex items-center gap-3">
                     <Avatar className="h-8 w-8 flex-shrink-0">
                       <AvatarFallback className="text-xs">{u.name[0].toUpperCase()}</AvatarFallback>
                     </Avatar>
@@ -473,14 +470,14 @@ function FriendsTab({ myId, authHeaders, onOpenChat, activeChatId }) {
 
         {/* Incoming requests */}
         {requests.length > 0 && (
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-3">
             <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 flex items-center gap-2">
               Requests
               <Badge variant="pink">{requests.length}</Badge>
             </p>
             {requests.map(req => (
               <Card key={req.friendship_id} className="border-gray-200 bg-gray-50">
-                <CardContent className="pt-3 pb-3 flex items-center gap-3">
+                <CardContent className="pt-4 pb-4 flex items-center gap-3">
                   <Avatar className="h-8 w-8 flex-shrink-0">
                     <AvatarFallback className="text-xs">{req.name[0].toUpperCase()}</AvatarFallback>
                   </Avatar>
@@ -501,7 +498,7 @@ function FriendsTab({ myId, authHeaders, onOpenChat, activeChatId }) {
         )}
 
         {/* Friends list */}
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-3">
           <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400">
             Friends &mdash; {friends.length}
           </p>
@@ -523,7 +520,7 @@ function FriendsTab({ myId, authHeaders, onOpenChat, activeChatId }) {
                   )}
                   onClick={() => onOpenChat(f)}
                 >
-                  <CardContent className="pt-3 pb-3 flex items-center gap-3">
+                  <CardContent className="pt-4 pb-4 flex items-center gap-3">
                     <Avatar className="h-8 w-8 flex-shrink-0">
                       <AvatarFallback className="text-xs">{f.name[0].toUpperCase()}</AvatarFallback>
                     </Avatar>
@@ -561,7 +558,7 @@ function FriendsTab({ myId, authHeaders, onOpenChat, activeChatId }) {
 function OnlinePeers({ otherUsers }) {
   if (otherUsers.length === 0) return null
   return (
-    <div className="border-t border-gray-200 p-3 flex-shrink-0">
+    <div className="border-t border-gray-200 p-4 flex-shrink-0">
       <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2 flex items-center gap-2">
         Online
         <Badge variant="teal" className="text-[10px]">{otherUsers.length}</Badge>
@@ -679,22 +676,17 @@ function App() {
   return (
     <div className="flex flex-col h-screen bg-gray-50 overflow-hidden">
       {/* Header */}
-      <header className="flex items-center gap-3 h-14 px-5 bg-white border-b border-gray-200 flex-shrink-0 shadow-sm">
-        <div className="flex items-center gap-2.5">
-          <div className="flex items-center justify-center w-8 h-8 rounded-xl bg-black shadow-sm">
-            <Globe className="w-4 h-4 text-white" />
-          </div>
-          <span className="text-lg font-extrabold text-black">Hitch</span>
-        </div>
+      <header className="flex items-center gap-4 h-16 px-6 bg-white border-b border-gray-200 flex-shrink-0 shadow-sm">
+        <span className="text-xl font-extrabold text-black tracking-tight">Hitch</span>
 
         <div className="w-px h-5 bg-gray-200" />
         <span className="text-xs text-gray-400 font-medium hidden sm:block">York Region District School Board</span>
 
         <div className="flex-1" />
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           <div className="w-2 h-2 rounded-full bg-[#00B14F] presence-dot" />
-          <span className="text-xs text-gray-600 font-semibold hidden sm:block">{userName}</span>
+          <span className="text-sm text-gray-600 font-semibold hidden sm:block">{userName}</span>
         </div>
 
         <TooltipProvider delayDuration={200}>
@@ -712,7 +704,7 @@ function App() {
       {/* Body */}
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
-        <aside className="w-72 flex-shrink-0 flex flex-col border-r border-gray-200 bg-white overflow-hidden">
+        <aside className="w-80 flex-shrink-0 flex flex-col border-r border-gray-200 bg-white overflow-hidden">
           {/* Tab nav */}
           <nav className="flex border-b border-gray-200 flex-shrink-0 bg-white">
             {TABS.map(tab => {
@@ -723,13 +715,13 @@ function App() {
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={cn(
-                    'flex-1 flex items-center justify-center gap-1.5 py-3 text-xs font-bold border-b-2 transition-all duration-150 relative',
+                    'flex-1 flex items-center justify-center gap-2 py-4 text-xs font-bold border-b-2 transition-all duration-150 relative',
                     activeTab === tab.id
                       ? 'border-black text-black'
                       : 'border-transparent text-gray-400 hover:text-gray-700'
                   )}
                 >
-                  <Icon className="h-3.5 w-3.5" />
+                  <Icon className="h-4 w-4" />
                   {tab.label}
                   {badge > 0 && (
                     <span className="absolute top-1.5 right-1.5 min-w-[16px] h-4 px-1 bg-black text-white rounded-full text-[9px] font-bold flex items-center justify-center">
