@@ -90,64 +90,77 @@ function AuthScreen({ onAuth }) {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-      <div className="relative w-full max-w-sm">
-        {/* Logo */}
-        <div className="text-center mb-10">
-          <h1 className="text-4xl font-extrabold text-black tracking-tight">Hitch</h1>
-          <p className="text-sm text-gray-400 mt-2">York Region District School Board</p>
+    <div className="min-h-screen flex items-center justify-center bg-[#F5F5F0] p-6">
+      <div className="w-full max-w-md">
+        {/* Logo block */}
+        <div className="mb-8">
+          <div className="inline-block bg-black px-6 py-3 mb-4 shadow-[6px_6px_0px_#C6F5D2]">
+            <h1 className="text-5xl font-bold text-[#FEFBB8] tracking-tight leading-none">Hitch</h1>
+          </div>
+          <p className="text-sm font-medium text-gray-600 ml-1">York Region District School Board</p>
         </div>
 
         {/* Card */}
-        <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-md">
+        <div className="rounded-[4px] border-2 border-black bg-white p-8 shadow-[6px_6px_0px_#000]">
           {/* Tabs */}
-          <div className="flex rounded-lg bg-gray-100 p-1 mb-6">
+          <div className="flex border-2 border-black mb-8">
             {['login', 'signup'].map(m => (
               <button
                 key={m}
                 onClick={() => { setMode(m); setError('') }}
                 className={cn(
-                  'flex-1 py-1.5 text-sm font-semibold rounded-md transition-all duration-150',
+                  'flex-1 py-3 text-sm font-bold transition-all duration-100',
                   mode === m
-                    ? 'bg-black text-white shadow-sm'
-                    : 'text-gray-500 hover:text-gray-900'
+                    ? 'bg-black text-[#FEFBB8]'
+                    : 'bg-white text-gray-500 hover:bg-[#F5F5F0] hover:text-black'
                 )}
               >
-                {m === 'login' ? 'Log in' : 'Sign up'}
+                {m === 'login' ? 'LOG IN' : 'SIGN UP'}
               </button>
             ))}
           </div>
 
           <div className="flex flex-col gap-4">
             {mode === 'signup' && (
-              <Input
-                placeholder="Your name"
-                value={name}
-                onChange={e => setName(e.target.value)}
-                autoFocus
-              />
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-widest mb-2">Your Name</label>
+                <Input
+                  placeholder="e.g. Alex Smith"
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  autoFocus
+                />
+              </div>
             )}
-            <Input
-              type="email"
-              placeholder="Email address"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              autoFocus={mode === 'login'}
-            />
-            <Input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              onKeyDown={e => e.key === 'Enter' && submit()}
-            />
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-widest mb-2">Email</label>
+              <Input
+                type="email"
+                placeholder="you@example.com"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                autoFocus={mode === 'login'}
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-widest mb-2">Password</label>
+              <Input
+                type="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && submit()}
+              />
+            </div>
 
             {error && (
-              <p className="text-xs text-red-500 text-center py-1">{error}</p>
+              <div className="border-2 border-red-600 bg-red-50 px-4 py-3 rounded-[4px]">
+                <p className="text-sm font-bold text-red-700">{error}</p>
+              </div>
             )}
 
-            <Button className="w-full mt-1" size="lg" onClick={submit} disabled={loading}>
-              {loading ? 'Please wait…' : mode === 'login' ? 'Log in' : 'Create account'}
+            <Button className="w-full mt-2" size="lg" onClick={submit} disabled={loading}>
+              {loading ? 'Please wait…' : mode === 'login' ? 'LOG IN' : 'CREATE ACCOUNT'}
             </Button>
           </div>
         </div>
@@ -159,9 +172,9 @@ function AuthScreen({ onAuth }) {
 // ── Sidebar tabs ─────────────────────────────────────────────────────────────
 
 const TABS = [
-  { id: 'schools',  icon: MapPin,        label: 'Schools' },
-  { id: 'carpools', icon: Car,           label: 'Carpools' },
-  { id: 'friends',  icon: Users,         label: 'Friends' },
+  { id: 'schools',  icon: MapPin,  label: 'Schools' },
+  { id: 'carpools', icon: Car,     label: 'Carpools' },
+  { id: 'friends',  icon: Users,   label: 'Friends' },
 ]
 
 // ── Schools tab ───────────────────────────────────────────────────────────────
@@ -169,9 +182,9 @@ const TABS = [
 function SchoolsTab({ locations, selected, onSelect }) {
   return (
     <div className="flex flex-col flex-1 overflow-hidden">
-      <div className="px-5 py-4 border-b border-gray-200 flex-shrink-0">
-        <p className="text-xs font-bold uppercase tracking-widest text-gray-400">
-          Schools &mdash; {locations.length}
+      <div className="px-5 py-4 border-b-2 border-black flex-shrink-0 bg-[#C6F5D2]">
+        <p className="text-xs font-bold uppercase tracking-widest text-black">
+          Schools — {locations.length}
         </p>
       </div>
       <ScrollArea className="flex-1">
@@ -180,22 +193,20 @@ function SchoolsTab({ locations, selected, onSelect }) {
             <li
               key={loc.id}
               className={cn(
-                'flex items-center gap-3 px-5 py-3.5 cursor-pointer border-l-2 transition-all duration-100',
+                'flex items-center gap-3 px-5 py-4 cursor-pointer border-l-4 border-b border-gray-100 transition-all duration-100',
                 selected?.id === loc.id
-                  ? 'border-black bg-gray-100'
-                  : 'border-transparent hover:bg-gray-50 hover:border-gray-300'
+                  ? 'border-l-black bg-[#FEFBB8]'
+                  : 'border-l-transparent hover:bg-[#F5F5F0] hover:border-l-gray-400'
               )}
               onClick={() => onSelect(prev => prev?.id === loc.id ? null : loc)}
             >
               <span className={cn(
-                'w-2 h-2 rounded-full flex-shrink-0 transition-all',
-                selected?.id === loc.id
-                  ? 'bg-brand-green'
-                  : 'bg-gray-300'
+                'w-3 h-3 rounded-[2px] flex-shrink-0 border-2 border-black transition-all',
+                selected?.id === loc.id ? 'bg-black' : 'bg-white'
               )} />
               <span className={cn(
                 'text-sm leading-snug',
-                selected?.id === loc.id ? 'text-black font-semibold' : 'text-gray-600 font-medium'
+                selected?.id === loc.id ? 'text-black font-bold' : 'text-gray-700 font-medium'
               )}>
                 {loc.name}
               </span>
@@ -253,92 +264,89 @@ function CarpoolsTab({ locations, userLocation, userId, carpoolRequests, myReque
         {!myRequest && !showForm && (
           <Button
             className="w-full"
+            variant="teal"
             onClick={() => setShowForm(true)}
             disabled={!userLocation}
             title={!userLocation ? 'Waiting for your location…' : undefined}
           >
             <Plus className="h-4 w-4" />
-            Request a Carpool
+            REQUEST A CARPOOL
           </Button>
         )}
 
         {showForm && (
-          <Card className="border-gray-200 bg-gray-50">
-            <CardContent className="pt-4 flex flex-col gap-3">
-              <div>
-                <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-1.5">Destination</p>
-                <Select value={school} onValueChange={setSchool}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select school…" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {locations.map(l => (
-                      <SelectItem key={l.id} value={String(l.id)}>{l.name}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-1.5">
-                  Message <span className="text-gray-400 normal-case font-normal tracking-normal">(optional)</span>
-                </p>
-                <Input
-                  placeholder="e.g. Leaving at 8:15 am"
-                  value={msg}
-                  onChange={e => setMsg(e.target.value)}
-                  onKeyDown={e => e.key === 'Enter' && submit()}
-                />
-              </div>
-              <div className="flex gap-2 justify-end">
-                <Button variant="outline" size="sm" onClick={() => { setShowForm(false); setSchool(''); setMsg('') }}>
-                  Cancel
-                </Button>
-                <Button size="sm" onClick={submit} disabled={!school || !userLocation}>
-                  Submit
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+          <div className="rounded-[4px] border-2 border-black bg-[#F5F5F0] p-4 flex flex-col gap-4 shadow-[4px_4px_0px_#000]">
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-widest mb-2">Destination</label>
+              <Select value={school} onValueChange={setSchool}>
+                <SelectTrigger className="border-2 border-black rounded-[4px] h-11 font-medium shadow-[3px_3px_0px_#000]">
+                  <SelectValue placeholder="Select school…" />
+                </SelectTrigger>
+                <SelectContent className="border-2 border-black rounded-[4px]">
+                  {locations.map(l => (
+                    <SelectItem key={l.id} value={String(l.id)} className="font-medium">{l.name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-widest mb-2">
+                Message <span className="text-gray-400 normal-case font-normal tracking-normal">(optional)</span>
+              </label>
+              <Input
+                placeholder="e.g. Leaving at 8:15 am"
+                value={msg}
+                onChange={e => setMsg(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && submit()}
+              />
+            </div>
+            <div className="flex gap-2 justify-end">
+              <Button variant="outline" size="sm" onClick={() => { setShowForm(false); setSchool(''); setMsg('') }}>
+                Cancel
+              </Button>
+              <Button variant="teal" size="sm" onClick={submit} disabled={!school || !userLocation}>
+                Submit
+              </Button>
+            </div>
+          </div>
         )}
 
         {/* My request */}
         {myRequest && (
-          <Card className="border-[#00B14F]/30 bg-green-50">
-            <CardContent className="pt-4 pb-4">
-              <div className="flex items-center justify-between mb-1">
-                <Badge variant="teal" className="text-[10px]">Your request</Badge>
-                <Button variant="destructive" size="icon-sm" onClick={cancel}>
-                  <Trash2 className="h-3.5 w-3.5" />
-                </Button>
-              </div>
-              <p className="text-sm font-semibold text-gray-900 mt-2">{myRequest.school_name}</p>
-              {myRequest.message && (
-                <p className="text-xs text-gray-500 italic mt-1">"{myRequest.message}"</p>
-              )}
-            </CardContent>
-          </Card>
+          <div className="rounded-[4px] border-2 border-black bg-[#C6F5D2] p-4 shadow-[4px_4px_0px_#000]">
+            <div className="flex items-center justify-between mb-3">
+              <Badge variant="teal" className="text-[11px] uppercase tracking-wider">Your Request</Badge>
+              <Button variant="destructive" size="icon-sm" onClick={cancel}>
+                <Trash2 className="h-3.5 w-3.5" />
+              </Button>
+            </div>
+            <p className="text-sm font-bold text-black">{myRequest.school_name}</p>
+            {myRequest.message && (
+              <p className="text-xs text-gray-700 italic mt-1">"{myRequest.message}"</p>
+            )}
+          </div>
         )}
 
         {otherCarpools.length === 0 && !showForm ? (
-          <div className="text-center py-8">
-            <Car className="h-8 w-8 mx-auto mb-2 text-gray-300" />
-            <p className="text-sm text-gray-400">No carpool requests yet.</p>
+          <div className="text-center py-10 border-2 border-dashed border-gray-300 rounded-[4px]">
+            <Car className="h-10 w-10 mx-auto mb-3 text-gray-300" />
+            <p className="text-sm font-bold text-gray-400 uppercase tracking-wider">No requests yet</p>
           </div>
         ) : (
           otherCarpools.map(req => (
-            <Card key={req.id} className="hover:border-gray-400 transition-colors">
-              <CardContent className="pt-4 pb-4">
+            <Card key={req.id} className="hover:shadow-[6px_6px_0px_#C6F5D2] transition-shadow">
+              <CardContent className="pt-5 pb-5">
                 <div className="flex items-center gap-3">
-                  <Avatar className="h-9 w-9 flex-shrink-0">
+                  <Avatar className="h-10 w-10 flex-shrink-0">
                     <AvatarFallback>{req.name[0].toUpperCase()}</AvatarFallback>
                   </Avatar>
                   <div className="min-w-0">
-                    <p className="text-sm font-semibold text-gray-900 truncate">{req.name}</p>
-                    <p className="text-xs text-gray-500 truncate">{req.school_name}</p>
+                    <p className="text-sm font-bold text-black truncate">{req.name}</p>
+                    <p className="text-xs font-medium text-gray-500 truncate">{req.school_name}</p>
                   </div>
                 </div>
                 {req.message && (
-                  <p className="text-xs text-gray-500 italic mt-2 ml-12">"{req.message}"</p>
+                  <p className="text-xs text-gray-600 italic mt-3 ml-13">"{req.message}"</p>
                 )}
               </CardContent>
             </Card>
@@ -427,9 +435,9 @@ function FriendsTab({ myId, authHeaders, onOpenChat, activeChatId }) {
       <div className="p-4 flex flex-col gap-5">
         {/* Search */}
         <div className="relative">
-          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
           <Input
-            className="pl-8 text-sm"
+            className="pl-9 text-sm"
             placeholder="Find people…"
             value={searchQ}
             onChange={e => setSearchQ(e.target.value)}
@@ -439,49 +447,49 @@ function FriendsTab({ myId, authHeaders, onOpenChat, activeChatId }) {
         {/* Search results */}
         {searchQ.length >= 2 && (
           <div className="flex flex-col gap-3">
-            <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400">Results</p>
+            <p className="text-xs font-bold uppercase tracking-widest text-black">Results</p>
             {searching ? (
-              <p className="text-xs text-gray-400 text-center py-2">Searching…</p>
+              <p className="text-sm font-medium text-gray-500 text-center py-3">Searching…</p>
             ) : searchResults.length === 0 ? (
-              <p className="text-xs text-gray-400 text-center py-2">No users found.</p>
+              <p className="text-sm font-medium text-gray-500 text-center py-3">No users found.</p>
             ) : (
               searchResults.map(u => (
                 <Card key={u.user_id}>
                   <CardContent className="pt-4 pb-4 flex items-center gap-3">
-                    <Avatar className="h-8 w-8 flex-shrink-0">
+                    <Avatar className="h-9 w-9 flex-shrink-0">
                       <AvatarFallback className="text-xs">{u.name[0].toUpperCase()}</AvatarFallback>
                     </Avatar>
-                    <span className="text-sm font-medium text-gray-900 flex-1 truncate">{u.name}</span>
+                    <span className="text-sm font-bold text-black flex-1 truncate">{u.name}</span>
                     {!friendIds.has(u.user_id) && (
-                      <Button size="icon-sm" variant="secondary" onClick={() => sendRequest(u.user_id)}>
+                      <Button size="icon-sm" variant="teal" onClick={() => sendRequest(u.user_id)}>
                         <UserPlus className="h-3.5 w-3.5" />
                       </Button>
                     )}
                     {friendIds.has(u.user_id) && (
-                      <UserCheck className="h-4 w-4 text-[#00B14F]" />
+                      <UserCheck className="h-5 w-5 text-black" />
                     )}
                   </CardContent>
                 </Card>
               ))
             )}
-            <Separator />
+            <div className="h-px bg-black" />
           </div>
         )}
 
         {/* Incoming requests */}
         {requests.length > 0 && (
           <div className="flex flex-col gap-3">
-            <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 flex items-center gap-2">
+            <p className="text-xs font-bold uppercase tracking-widest text-black flex items-center gap-2">
               Requests
               <Badge variant="pink">{requests.length}</Badge>
             </p>
             {requests.map(req => (
-              <Card key={req.friendship_id} className="border-gray-200 bg-gray-50">
+              <Card key={req.friendship_id} className="bg-[#FEFBB8]">
                 <CardContent className="pt-4 pb-4 flex items-center gap-3">
-                  <Avatar className="h-8 w-8 flex-shrink-0">
+                  <Avatar className="h-9 w-9 flex-shrink-0">
                     <AvatarFallback className="text-xs">{req.name[0].toUpperCase()}</AvatarFallback>
                   </Avatar>
-                  <span className="text-sm font-medium text-gray-900 flex-1 truncate">{req.name}</span>
+                  <span className="text-sm font-bold text-black flex-1 truncate">{req.name}</span>
                   <div className="flex gap-1.5">
                     <Button size="icon-sm" variant="teal" onClick={() => acceptRequest(req.friendship_id)}>
                       <Check className="h-3.5 w-3.5" />
@@ -493,19 +501,19 @@ function FriendsTab({ myId, authHeaders, onOpenChat, activeChatId }) {
                 </CardContent>
               </Card>
             ))}
-            <Separator />
+            <div className="h-px bg-black" />
           </div>
         )}
 
         {/* Friends list */}
         <div className="flex flex-col gap-3">
-          <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400">
-            Friends &mdash; {friends.length}
+          <p className="text-xs font-bold uppercase tracking-widest text-black">
+            Friends — {friends.length}
           </p>
           {friends.length === 0 ? (
-            <div className="text-center py-6">
-              <Users className="h-8 w-8 mx-auto mb-2 text-gray-300" />
-              <p className="text-sm text-gray-400">Search above to add friends.</p>
+            <div className="text-center py-8 border-2 border-dashed border-gray-300 rounded-[4px]">
+              <Users className="h-10 w-10 mx-auto mb-3 text-gray-300" />
+              <p className="text-sm font-bold text-gray-400 uppercase tracking-wider">Add friends above</p>
             </div>
           ) : (
             friends.map(f => {
@@ -515,19 +523,19 @@ function FriendsTab({ myId, authHeaders, onOpenChat, activeChatId }) {
                 <Card
                   key={f.friendship_id}
                   className={cn(
-                    'cursor-pointer transition-all hover:border-gray-400',
-                    isActive && 'border-gray-900 bg-gray-100'
+                    'cursor-pointer transition-all hover:shadow-[6px_6px_0px_#C6F5D2]',
+                    isActive && 'bg-[#C6F5D2] shadow-[4px_4px_0px_#000]'
                   )}
                   onClick={() => onOpenChat(f)}
                 >
                   <CardContent className="pt-4 pb-4 flex items-center gap-3">
-                    <Avatar className="h-8 w-8 flex-shrink-0">
+                    <Avatar className="h-9 w-9 flex-shrink-0">
                       <AvatarFallback className="text-xs">{f.name[0].toUpperCase()}</AvatarFallback>
                     </Avatar>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-gray-900 truncate">{f.name}</p>
+                      <p className="text-sm font-bold text-black truncate">{f.name}</p>
                       {unreadCount > 0 && (
-                        <p className="text-xs text-[#00B14F] font-medium">{unreadCount} new message{unreadCount > 1 ? 's' : ''}</p>
+                        <p className="text-xs font-bold text-black">{unreadCount} new message{unreadCount > 1 ? 's' : ''}</p>
                       )}
                     </div>
                     <div className="flex items-center gap-1.5">
@@ -540,7 +548,7 @@ function FriendsTab({ myId, authHeaders, onOpenChat, activeChatId }) {
                       >
                         <X className="h-3.5 w-3.5" />
                       </Button>
-                      <MessageSquare className="h-4 w-4 text-gray-400" />
+                      <MessageSquare className="h-4 w-4 text-gray-500" />
                     </div>
                   </CardContent>
                 </Card>
@@ -558,21 +566,21 @@ function FriendsTab({ myId, authHeaders, onOpenChat, activeChatId }) {
 function OnlinePeers({ otherUsers }) {
   if (otherUsers.length === 0) return null
   return (
-    <div className="border-t border-gray-200 p-4 flex-shrink-0">
-      <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2 flex items-center gap-2">
+    <div className="border-t-2 border-black p-4 flex-shrink-0 bg-[#F5F5F0]">
+      <p className="text-xs font-bold uppercase tracking-widest text-black mb-3 flex items-center gap-2">
         Online
         <Badge variant="teal" className="text-[10px]">{otherUsers.length}</Badge>
       </p>
-      <div className="flex flex-wrap gap-1.5">
+      <div className="flex flex-wrap gap-2">
         <TooltipProvider delayDuration={200}>
           {otherUsers.map(u => (
             <Tooltip key={u.user_id}>
               <TooltipTrigger asChild>
-                <Avatar className="h-7 w-7 cursor-default">
+                <Avatar className="h-8 w-8 cursor-default">
                   <AvatarFallback className="text-[10px]">{u.name[0].toUpperCase()}</AvatarFallback>
                 </Avatar>
               </TooltipTrigger>
-              <TooltipContent>{u.name}</TooltipContent>
+              <TooltipContent className="border-2 border-black rounded-[4px] font-bold">{u.name}</TooltipContent>
             </Tooltip>
           ))}
         </TooltipProvider>
@@ -606,7 +614,7 @@ function App() {
   const [carpoolRequests, setCarpoolRequests] = useState([])
   const [myRequest, setMyRequest] = useState(null)
   const [activeTab, setActiveTab] = useState('schools')
-  const [activeChat, setActiveChat] = useState(null) // friend object
+  const [activeChat, setActiveChat] = useState(null)
 
   const authHeaders = () => ({
     'Content-Type': 'application/json',
@@ -628,7 +636,6 @@ function App() {
     setCurrentUser(decodeToken(newToken))
   }
 
-  // Broadcast location every 15 s
   useEffect(() => {
     if (!token || !userLocation) return
     const send = () => fetch('/api/users/location', {
@@ -641,7 +648,6 @@ function App() {
     return () => clearInterval(id)
   }, [token, userLocation]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Poll other users every 10 s
   useEffect(() => {
     if (!token) return
     const poll = () =>
@@ -653,7 +659,6 @@ function App() {
     return () => clearInterval(id)
   }, [token, userId]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Poll carpools every 10 s
   useEffect(() => {
     if (!token) return
     const poll = () =>
@@ -674,29 +679,34 @@ function App() {
   const carpoolBadge = carpoolRequests.filter(r => r.user_id !== userId).length
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50 overflow-hidden">
+    <div className="flex flex-col h-screen bg-[#F5F5F0] overflow-hidden">
       {/* Header */}
-      <header className="flex items-center gap-4 h-16 px-6 bg-white border-b border-gray-200 flex-shrink-0 shadow-sm">
-        <span className="text-xl font-extrabold text-black tracking-tight">Hitch</span>
+      <header className="flex items-center gap-4 h-16 px-6 bg-black border-b-2 border-black flex-shrink-0">
+        <span className="text-2xl font-bold text-[#FEFBB8] tracking-tight">Hitch</span>
 
-        <div className="w-px h-5 bg-gray-200" />
-        <span className="text-xs text-gray-400 font-medium hidden sm:block">York Region District School Board</span>
+        <div className="w-px h-5 bg-white/20" />
+        <span className="text-xs text-white/50 font-medium hidden sm:block tracking-wider uppercase">York Region DSB</span>
 
         <div className="flex-1" />
 
-        <div className="flex items-center gap-2.5">
-          <div className="w-2 h-2 rounded-full bg-[#00B14F] presence-dot" />
-          <span className="text-sm text-gray-600 font-semibold hidden sm:block">{userName}</span>
+        <div className="flex items-center gap-3">
+          <div className="w-2.5 h-2.5 rounded-full bg-[#C6F5D2] presence-dot" />
+          <span className="text-sm text-white font-bold hidden sm:block">{userName}</span>
         </div>
 
         <TooltipProvider delayDuration={200}>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon-sm" onClick={logout}>
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                onClick={logout}
+                className="text-white hover:bg-white/10 hover:text-white border-transparent"
+              >
                 <LogOut className="h-4 w-4" />
               </Button>
             </TooltipTrigger>
-            <TooltipContent>Log out</TooltipContent>
+            <TooltipContent className="border-2 border-black rounded-[4px] font-bold">Log out</TooltipContent>
           </Tooltip>
         </TooltipProvider>
       </header>
@@ -704,9 +714,9 @@ function App() {
       {/* Body */}
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
-        <aside className="w-80 flex-shrink-0 flex flex-col border-r border-gray-200 bg-white overflow-hidden">
+        <aside className="w-84 flex-shrink-0 flex flex-col border-r-2 border-black bg-white overflow-hidden" style={{ width: '340px' }}>
           {/* Tab nav */}
-          <nav className="flex border-b border-gray-200 flex-shrink-0 bg-white">
+          <nav className="flex border-b-2 border-black flex-shrink-0 bg-white">
             {TABS.map(tab => {
               const Icon = tab.icon
               const badge = tab.id === 'carpools' ? carpoolBadge : 0
@@ -715,16 +725,16 @@ function App() {
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={cn(
-                    'flex-1 flex items-center justify-center gap-2 py-4 text-xs font-bold border-b-2 transition-all duration-150 relative',
+                    'flex-1 flex items-center justify-center gap-2 py-4 text-xs font-bold border-b-4 transition-all duration-100 relative uppercase tracking-wider',
                     activeTab === tab.id
-                      ? 'border-black text-black'
-                      : 'border-transparent text-gray-400 hover:text-gray-700'
+                      ? 'border-black text-black bg-[#FEFBB8]'
+                      : 'border-transparent text-gray-400 hover:text-black hover:bg-[#F5F5F0]'
                   )}
                 >
                   <Icon className="h-4 w-4" />
                   {tab.label}
                   {badge > 0 && (
-                    <span className="absolute top-1.5 right-1.5 min-w-[16px] h-4 px-1 bg-black text-white rounded-full text-[9px] font-bold flex items-center justify-center">
+                    <span className="absolute top-2 right-2 min-w-[18px] h-[18px] px-1 bg-black text-white rounded-[3px] text-[9px] font-bold flex items-center justify-center border border-white">
                       {badge}
                     </span>
                   )}
@@ -767,11 +777,13 @@ function App() {
         {/* Map */}
         <main className="flex-1 relative overflow-hidden">
           <ErrorBoundary fallback={
-            <div className="flex items-center justify-center h-full bg-gray-100">
-              <p className="text-sm text-gray-500">Map unavailable — check your Mapbox token.</p>
+            <div className="flex items-center justify-center h-full bg-[#F5F5F0]">
+              <div className="border-2 border-black p-6 shadow-[4px_4px_0px_#000] bg-white">
+                <p className="text-sm font-bold text-black">Map unavailable — check your Mapbox token.</p>
+              </div>
             </div>
           }>
-            <Suspense fallback={<div className="flex-1 bg-gray-100" />}>
+            <Suspense fallback={<div className="flex-1 bg-[#F5F5F0]" />}>
             <MapComponent
               locations={locations}
               selectedLocation={selected}
@@ -785,9 +797,9 @@ function App() {
           </ErrorBoundary>
         </main>
 
-        {/* Chat panel (slides in from right) */}
+        {/* Chat panel */}
         {activeChat && (
-          <div className="w-80 flex-shrink-0 flex flex-col border-l border-gray-200 overflow-hidden">
+          <div className="flex-shrink-0 flex flex-col border-l-2 border-black overflow-hidden" style={{ width: '320px' }}>
             <ChatPanel
               friend={activeChat}
               myId={userId}
