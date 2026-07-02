@@ -1,39 +1,40 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #F6F6F6;
-  --foreground: #111111;
+  --background: #F5F5F0;
+  --foreground: #000000;
   --card: #FFFFFF;
-  --card-foreground: #111111;
+  --card-foreground: #000000;
   --popover: #FFFFFF;
-  --popover-foreground: #111111;
+  --popover-foreground: #000000;
   --primary: #000000;
   --primary-foreground: #FFFFFF;
-  --secondary: #F3F3F3;
-  --secondary-foreground: #333333;
-  --muted: #F3F3F3;
-  --muted-foreground: #6B6B6B;
-  --accent: #F3F3F3;
-  --accent-foreground: #111111;
-  --destructive: #D90B2C;
+  --secondary: #F0F0E8;
+  --secondary-foreground: #000000;
+  --muted: #EBEBDF;
+  --muted-foreground: #555555;
+  --accent: #C6F5D2;
+  --accent-foreground: #000000;
+  --destructive: #CC0000;
   --destructive-foreground: #FFFFFF;
-  --border: #E0E0E0;
-  --input: #E8E8E8;
+  --border: #000000;
+  --input: #FFFFFF;
   --ring: #000000;
-  --radius: 0.5rem;
+  --radius: 4px;
 
   /* Brand tokens */
-  --brand-green: #00B14F;
-  --brand-green-dk: #008C3C;
+  --brand-green: #C6F5D2;
+  --brand-green-dk: #8EE8A4;
+  --brand-yellow: #FEFBB8;
+  --brand-yellow-dk: #F5E870;
   --brand-black: #000000;
-  --brand-gray: #6B6B6B;
-  --brand-red: #D90B2C;
+  --brand-red: #CC0000;
 
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
 }
 
 @theme inline {
@@ -59,8 +60,8 @@
   --radius-sm: calc(var(--radius) - 2px);
   --radius-md: var(--radius);
   --radius-lg: calc(var(--radius) + 2px);
-  --radius-xl: calc(var(--radius) + 6px);
-  --font-sans: 'Inter', system-ui, sans-serif;
+  --radius-xl: calc(var(--radius) + 4px);
+  --font-sans: 'Space Grotesk', system-ui, sans-serif;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -68,20 +69,20 @@
 html, body, #root { height: 100%; }
 
 body {
-  background: #F6F6F6;
-  color: #111111;
-  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Space Grotesk', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
 /* ── Map markers ─────────────────────────────────── */
 .school-marker {
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   background: #000000;
-  border-radius: 50%;
+  border-radius: 2px;
   border: 2px solid #FFFFFF;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
   cursor: pointer;
   transition: transform 0.15s, background 0.15s;
 }
@@ -89,60 +90,62 @@ body {
 .school-marker:hover,
 .school-marker.active {
   transform: scale(1.6);
-  background: var(--brand-green);
-  box-shadow: 0 1px 6px rgba(0,177,79,0.5);
+  background: var(--brand-green-dk);
+  box-shadow: 0 2px 8px rgba(142,232,164,0.6);
 }
 
 .user-marker {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: var(--brand-green);
-  border: 3px solid #FFFFFF;
-  box-shadow: 0 0 0 2px rgba(0,177,79,0.25), 0 2px 6px rgba(0,0,0,0.2);
+  width: 18px;
+  height: 18px;
+  border-radius: 3px;
+  background: var(--brand-green-dk);
+  border: 3px solid #000000;
+  box-shadow: 0 0 0 2px rgba(142,232,164,0.3), 0 2px 8px rgba(0,0,0,0.3);
 }
 
 .peer-marker {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  border-radius: 4px;
   background: #000000;
-  border: 2px solid #FFFFFF;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  border: 2px solid var(--brand-yellow);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.35);
   color: #fff;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: default;
   user-select: none;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
 }
 
 .carpool-marker {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #333333;
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  background: #444444;
   border: 2px solid #FFFFFF;
   box-shadow: 0 1px 4px rgba(0,0,0,0.25);
   cursor: default;
 }
 
 .carpool-marker.mine {
-  background: var(--brand-green);
-  box-shadow: 0 1px 4px rgba(0,177,79,0.4);
+  background: var(--brand-green-dk);
+  border-color: #000000;
+  box-shadow: 0 1px 4px rgba(142,232,164,0.5);
 }
 
 /* ── Mapbox popup ────────────────────────────────── */
 .mapboxgl-popup-content {
-  padding: 10px 14px !important;
-  border-radius: 8px !important;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.15) !important;
-  font-family: 'Inter', system-ui, sans-serif !important;
-  background: #FFFFFF !important;
-  border: 1px solid #E0E0E0 !important;
-  color: #111111 !important;
+  padding: 12px 16px !important;
+  border-radius: 4px !important;
+  box-shadow: 4px 4px 0px rgba(0,0,0,1) !important;
+  font-family: 'Space Grotesk', system-ui, sans-serif !important;
+  background: var(--brand-yellow) !important;
+  border: 2px solid #000000 !important;
+  color: #000000 !important;
 }
 
 .mapboxgl-popup-tip { display: none !important; }
@@ -151,31 +154,31 @@ body {
   font-size: 13px;
   font-weight: 700;
   white-space: nowrap;
-  color: #111111;
+  color: #000000;
 }
 
 /* ── Mapbox controls ─────────────────────────────── */
 .mapboxgl-ctrl-group {
-  border-radius: 8px !important;
+  border-radius: 4px !important;
   overflow: hidden;
   background: #FFFFFF !important;
-  border: 1px solid #E0E0E0 !important;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+  border: 2px solid #000000 !important;
+  box-shadow: 3px 3px 0px rgba(0,0,0,0.8) !important;
 }
 
 .mapboxgl-ctrl-group button {
   background: #FFFFFF !important;
-  color: #111111 !important;
+  color: #000000 !important;
 }
 
 .mapboxgl-ctrl-group button:hover {
-  background: #F3F3F3 !important;
+  background: var(--brand-green) !important;
 }
 
 /* ── Presence dot animation ──────────────────────── */
 @keyframes pulse-dot {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(0,177,79,0.4); }
-  50%       { box-shadow: 0 0 0 4px rgba(0,177,79,0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(142,232,164,0.6); }
+  50%       { box-shadow: 0 0 0 5px rgba(142,232,164,0); }
 }
 
 .presence-dot {
@@ -183,20 +186,22 @@ body {
 }
 
 /* ── Scrollbar styling ───────────────────────────── */
-.custom-scroll::-webkit-scrollbar { width: 4px; }
+.custom-scroll::-webkit-scrollbar { width: 5px; }
 .custom-scroll::-webkit-scrollbar-track { background: transparent; }
-.custom-scroll::-webkit-scrollbar-thumb { background: #D8D8D8; border-radius: 2px; }
+.custom-scroll::-webkit-scrollbar-thumb { background: #CCCCCC; border-radius: 2px; }
 
 /* ── Chat bubble ─────────────────────────────────── */
 .chat-bubble-mine {
   background: #000000;
-  color: #FFFFFF;
-  border-radius: 18px 18px 4px 18px;
+  color: var(--brand-yellow);
+  border-radius: 4px 4px 0px 4px;
+  font-weight: 500;
 }
 
 .chat-bubble-theirs {
-  background: #F3F3F3;
-  color: #111111;
-  border: 1px solid #E0E0E0;
-  border-radius: 18px 18px 18px 4px;
+  background: var(--brand-green);
+  color: #000000;
+  border: 2px solid #000000;
+  border-radius: 4px 4px 4px 0px;
+  font-weight: 500;
 }

@@ -61,44 +61,44 @@ export default function ChatPanel({ friend, myId, authHeaders, onClose }) {
   }
 
   return (
-    <div className="flex flex-col h-full bg-white border-l border-gray-200">
+    <div className="flex flex-col h-full bg-white border-l-2 border-black">
       {/* Header */}
-      <div className="flex items-center gap-3 px-4 py-3 border-b border-gray-200 flex-shrink-0">
-        <Avatar className="h-8 w-8">
-          <AvatarFallback className="text-xs">{friend.name[0].toUpperCase()}</AvatarFallback>
+      <div className="flex items-center gap-3 px-4 py-4 border-b-2 border-black bg-[#C6F5D2] flex-shrink-0">
+        <Avatar className="h-9 w-9">
+          <AvatarFallback className="text-sm">{friend.name[0].toUpperCase()}</AvatarFallback>
         </Avatar>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-semibold text-gray-900 truncate">{friend.name}</p>
-          <p className="text-xs text-gray-400">Friend</p>
+          <p className="text-sm font-bold text-black truncate">{friend.name}</p>
+          <p className="text-xs font-medium text-gray-600 uppercase tracking-wider">Friend</p>
         </div>
-        <Button variant="ghost" size="icon-sm" onClick={onClose}>
+        <Button variant="ghost" size="icon-sm" onClick={onClose} className="text-black hover:bg-black/10 border-transparent">
           <X className="h-4 w-4" />
         </Button>
       </div>
 
       {/* Messages */}
-      <ScrollArea className="flex-1 px-4 py-3">
+      <ScrollArea className="flex-1 px-4 py-4">
         {messages.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-32 gap-2 text-gray-400">
-            <MessageCircle className="h-8 w-8 opacity-30" />
-            <p className="text-xs">No messages yet. Say hi!</p>
+          <div className="flex flex-col items-center justify-center h-32 gap-3 text-gray-400">
+            <MessageCircle className="h-10 w-10 opacity-20" />
+            <p className="text-xs font-bold uppercase tracking-wider">No messages yet. Say hi!</p>
           </div>
         ) : (
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-3">
             {messages.map(msg => {
               const isMine = msg.sender_id === myId
               return (
                 <div key={msg.id} className={cn('flex gap-2', isMine ? 'justify-end' : 'justify-start')}>
                   {!isMine && (
-                    <Avatar className="h-6 w-6 flex-shrink-0 mt-1">
+                    <Avatar className="h-7 w-7 flex-shrink-0 mt-1">
                       <AvatarFallback className="text-[10px]">{friend.name[0].toUpperCase()}</AvatarFallback>
                     </Avatar>
                   )}
                   <div className="max-w-[75%]">
-                    <div className={cn('px-3 py-2 text-sm', isMine ? 'chat-bubble-mine' : 'chat-bubble-theirs')}>
+                    <div className={cn('px-4 py-2.5 text-sm', isMine ? 'chat-bubble-mine' : 'chat-bubble-theirs')}>
                       {msg.content}
                     </div>
-                    <p className={cn('text-[10px] text-gray-400 mt-0.5', isMine ? 'text-right' : 'text-left')}>
+                    <p className={cn('text-[10px] font-medium text-gray-500 mt-1', isMine ? 'text-right' : 'text-left')}>
                       {formatTime(msg.created_at)}
                     </p>
                   </div>
@@ -111,7 +111,7 @@ export default function ChatPanel({ friend, myId, authHeaders, onClose }) {
       </ScrollArea>
 
       {/* Input */}
-      <div className="flex items-center gap-2 px-4 py-3 border-t border-gray-200 flex-shrink-0">
+      <div className="flex items-center gap-2 px-4 py-4 border-t-2 border-black flex-shrink-0 bg-[#F5F5F0]">
         <Input
           className="flex-1 text-sm"
           placeholder={`Message ${friend.name}…`}
@@ -119,7 +119,7 @@ export default function ChatPanel({ friend, myId, authHeaders, onClose }) {
           onChange={e => setDraft(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && !e.shiftKey && sendMessage()}
         />
-        <Button size="icon" onClick={sendMessage} disabled={!draft.trim() || sending}>
+        <Button size="icon" variant="teal" onClick={sendMessage} disabled={!draft.trim() || sending}>
           <Send className="h-4 w-4" />
         </Button>
       </div>
