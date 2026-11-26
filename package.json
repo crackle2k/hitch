@@ -27,7 +27,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^1.73.0",
-    "mapbox-gl": "^3.34.1",
+    "mapbox-gl": "^3.35.2",
     "react": "^19.2.5",
     "react-dom": "^19.3.1",
     "react-map-gl": "^8.1.3",
